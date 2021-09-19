@@ -1,0 +1,57 @@
+
+import java.util.Stack;
+
+
+public class ParanthesisProblem {
+	public static void main(String[] args) {
+		String s = "(]";
+		boolean isvalid = checkParanthesis(s);
+		System.out.println(isvalid);
+
+	}
+
+	public static boolean checkParanthesis(String s) {
+		/*
+		 * String[] s1 = s.split(""); Map<String,Long> s2 =
+		 * Arrays.stream(s1).collect(Collectors.groupingBy(s5->s5,Collectors.counting())
+		 * ); System.out.println(s2);
+		 */
+		Stack<Character> ch = new Stack();
+		for (int i = 0; i < s.length(); i++) {
+			Character cc = s.charAt(i);
+			char check;
+			if (cc == '{' || cc == '[' || cc == '(') {
+				ch.push(cc);
+				continue;
+			}
+			if (ch.isEmpty()) {
+				return false;
+			} else {
+				switch (cc) {
+				case ')':
+					check = ch.pop();
+					if (check == '{' || check == '[') {
+						return false;
+					}
+					break;
+
+				case ']':
+					check = ch.pop();
+					if (check == '{' || check == '(') {
+						return false;
+					}
+					break;
+
+				case '}':
+					check = ch.pop();
+					if (check == '(' || check == '[') {
+						return false;
+					}
+					break;
+				}
+			}
+		}
+		return ch.isEmpty();
+
+	}
+}
